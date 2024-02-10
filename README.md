@@ -4,7 +4,7 @@
 Command to run/build container
 
 ```bash
-docker-compose run -d --build
+docker-compose up -d --build
 ```
 
 ## Usage
@@ -13,7 +13,9 @@ In this example, we will use Yii2.
 
 ```bash
 docker exec -it php_project bash
-
+```
+## Install PHP project inside the container
+```bash
 composer create-project --prefer-dist yiisoft/yii2-app-advanced php-project
 ```
 ## MySQL

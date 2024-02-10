@@ -1,1 +1,4 @@
 /.idea/
+/mysql-data/
+/www/.composer/
+/www/.bash_history
