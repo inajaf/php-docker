@@ -38,6 +38,51 @@ SQL params are provided in compose.yaml
    networks:
      - php
 ```
+## NGINX
+To operate with only one server, simply eliminate the second one. Initially, both servers were utilized as Yii2 Advanced framework comprises separate backend and frontend components. By consolidating them into a single server, you can adapt the configuration according to your specific requirements.
+```bash
+server {
+    listen 80;
+    server_name admin.localhost;
+
+    root /var/www/php-project/backend/web/;
+
+    index index.php index.html
+    charset utf-8;
+
+    location / {
+        try_files $uri $uri/ /index.php$is_args$args;
+    }
+
+    location ~ ^/upload {
+        root /var/www/php-project/frontend/web/;
+        try_files $uri $uri/ =404;
+    }
+
+    location ~ \.(js|css|png|jpg|gif|swf|ico|pdf|mov|fla|zip|rar)$ {
+        try_files $uri =404;
+    }
+
+    location ~ ^/(assets|upload)/.*\.php$ {
+        deny all;
+    }
+
+    location ~* /\. {
+        deny all;
+    }
+
+    location ~ \.php$ {
+        try_files $uri =404;
+
+        fastcgi_index index.php;
+
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+
+        fastcgi_pass php_project:9000;
+    }
+}
+```
 ## PHP extensions
 You can add php extensions through the Dockerfile in images/php82fpm/Dockerfile:
 ```bash
