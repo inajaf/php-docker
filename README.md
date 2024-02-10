@@ -38,6 +38,11 @@ SQL params are provided in compose.yaml
    networks:
      - php
 ```
+## PHP extensions
+You can add php extensions through the Dockerfile in images/php82fpm/Dockerfile:
+```bash
+RUN docker-php-ext-install pdo pdo_mysql php_extension_name
+```
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
